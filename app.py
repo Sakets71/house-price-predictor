@@ -12,29 +12,12 @@ st.set_page_config(
 )
 
 # ========================================================================
-# Force Light Theme with Custom CSS
+# Custom CSS (Matches config.toml theme)
 # ========================================================================
 st.markdown("""
 <style>
-    /* Main app background and text */
-    [data-testid="stAppViewContainer"] {
-        background-color: #f5f5f5 !important;
-        color: #000000 !important;
-    }
-
-    /* Header background (top bar) */
-    [data-testid="stHeader"] {
-        background-color: #f5f5f5 !important;
-    }
-
-    /* Sidebar (if used later) */
-    [data-testid="stSidebar"] {
-        background-color: #a1abce !important;
-        color: #000000 !important;
-    }
-
     body {
-        background-color: #f5f5f5;
+        background-color: #F1F1F1;
         color: #000000;
         font-family: 'Inter', sans-serif;
     }
@@ -42,7 +25,7 @@ st.markdown("""
     .main-title {
         font-size: 2rem;
         font-weight: 700;
-        color: #ff2c2c;
+        color: #4B5C5C;
         text-align: center;
         margin-bottom: 0.5rem;
     }
@@ -55,7 +38,7 @@ st.markdown("""
     }
 
     .card {
-        background: #ffffff;
+        background: #FAFAFA;
         padding: 1.5rem;
         border-radius: 0.75rem;
         box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -63,7 +46,7 @@ st.markdown("""
     }
 
     .result-box {
-        background: #ff2c2c;
+        background: #4B5C5C;
         color: white;
         padding: 1.5rem;
         border-radius: 0.75rem;
@@ -84,7 +67,7 @@ st.markdown("""
 
     .accuracy-box {
         background: #a1abce;
-        color: #000000;
+        color: black;
         padding: 1rem;
         border-radius: 0.5rem;
         text-align: center;
@@ -93,7 +76,7 @@ st.markdown("""
     }
 
     .stButton > button {
-        background-color: #ff2c2c;
+        background-color: #4B5C5C;
         color: white;
         border: none;
         padding: 0.75rem;
@@ -111,19 +94,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ========================================================================
-# Load Model + Scaler (keep your path)
+# Load Model + Scaler
 # ========================================================================
 model = joblib.load(r"house_price_model.pkl")
 scaler = joblib.load(r"scaler.pkl")
 
 # ========================================================================
-# Header
+# Header Section
 # ========================================================================
 st.markdown("<div class='main-title'>House Price Predictor</div>", unsafe_allow_html=True)
-st.markdown(
-    "<p class='sub-text'>Enter property details below and get valuation in USD & INR.</p>",
-    unsafe_allow_html=True,
-)
+st.markdown("<p class='sub-text'>Enter property details below and get valuation in USD & INR.</p>", unsafe_allow_html=True)
 
 # ========================================================================
 # Input Card
@@ -159,11 +139,11 @@ if predict:
     pred_log = model.predict(scaled)
     predicted_price_usd = float(np.expm1(pred_log)[0])
 
-    # Simple fixed conversion rate to INR
+    # Convert USD to INR (fix conversion rate)
     USD_TO_INR = 83.0
     predicted_price_inr = predicted_price_usd * USD_TO_INR
 
-    # Result Box (INR + USD)
+    # Result Box (USD + INR)
     st.markdown(f"""
         <div class='result-box'>
             <h3>Estimated House Value</h3>
