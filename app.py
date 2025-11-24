@@ -96,8 +96,8 @@ st.markdown("""
 # ========================================================================
 # Load Model + Scaler
 # ========================================================================
-model = joblib.load(r"D:\\python\\EDA\\House Price\\house_price_model.pkl")
-scaler = joblib.load(r"D:\\python\\EDA\\House Price\\scaler.pkl")
+model = joblib.load(r"house_price_model.pkl")
+scaler = joblib.load(r"scaler.pkl")
 
 # ========================================================================
 # Header Section
